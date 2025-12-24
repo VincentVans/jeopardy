@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <title>Jeopardy</title>
+  <style>
+    /* Fill the screen */
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      width: 100%;
+      font-family: Arial, sans-serif;
+      overflow: hidden; /* remove if you want a scrollbar */
+    }
+
+    body {
+      background-image: url('startscreen.png');
+	  background-size: 100% 100%;
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      position: relative;
+    }
+
+    h1 {
+      margin-top: 10px;
+      font-size: 3rem;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      text-align: center;
+    }
+
+    #title {
+      position: absolute;
+      background-image: url('jeopardy_title.png');
+	    background-size: 100% 100%;
+      top: 0; left: 0; right: 0; bottom: 0;
+    }
+    /* Start Screen Overlay */
+    #start-screen {
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background-color: rgba(0, 0, 0, 0.85);
+      display: none;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+      text-align: center;
+    }
+    .team-input {
+      margin: 10px;
+    }
+    .team-input label {
+      display: inline-block;
+      margin-bottom: 5px;
+    }
+    .team-input input {
+      width: 200px;
+      padding: 8px;
+      border-radius: 4px;
+      border: none;
+      margin-bottom: 10px;
+      outline: none;
+    }
+    #start-game-btn {
+      padding: 15px 30px;
+      font-size: 1.5rem;
+      cursor: pointer;
+      background-color: #ff9900;
+      border: none;
+      border-radius: 8px;
+      color: #fff;
+      text-transform: uppercase;
+      transition: all 0.2s ease;
+    }
+    #start-game-btn:hover {
+      background-color: #ff6600;
+    }
+
+    /* Top bar: turn indicator + scoreboard */
+    #top-bar {
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      margin-top: 10px;
+	  background: rgba(30,30,30,0.8);
+    }
+
+    #turn-indicator {
+      font-size: 2rem;
+      margin-bottom: 10px;
+    }
+
+    #scoreboard {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2rem;
+      gap: 40px;
+    }
+    #scoreboard div {
+      padding: 10px;
+    }
+
+    /* Board container */
+    #board-container {
+      position: relative;
+      width: 90%;
+      max-width: 1200px;
+      height: 70%;
+      margin-top: 15px;
+      display: none; /* hidden until start */
+    }
+
+    /* We'll set grid columns dynamically via JS */
+    #jeopardy-board {
+      width: 100%;
+      height: 100%;
+      display: grid;
+      grid-auto-rows: 1fr; /* each row is uniform, 5 rows total for 5 questions */
+      gap: 4px;
+    }
+
+    .category-header {
+      background: #003366;
+      border: 2px solid #ccc;
+      color: #fff;
+      font-size: 1.2rem;
+      text-align: center;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-transform: uppercase;
+    }
+    .question-cell {
+      background: #004080;
+      border: 2px solid #ccc;
+      color: #fff;
+      font-size: 1.5rem;
+      font-weight: bold;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+    .question-cell:hover {
+      background: #0055aa;
+    }
+    .question-cell.used {
+      background: #666;
+      color: #aaa;
+      cursor: default;
+    }
+
+    /* Question modal */
+    #question-modal {
+      display: none;
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0, 0, 0, 0.8);
+      justify-content: center;
+      align-items: center;
+      z-index: 10000;
+    }
+    #question-content {
+      background: #333;
+      padding: 20px 30px;
+      border-radius: 10px;
+      text-align: center;
+      position: relative;
+      max-width: 600px;
+      width: 90%;
+    }
+
+    #media-container {
+      margin-bottom: 15px;
+    }
+    #media-container img,
+    #media-container video,
+    #media-container audio {
+      max-width: 100%;
+      margin-bottom: 10px;
+      border: 2px solid #fff;
+    }
+
+    #show-question-btn {
+      margin-bottom: 15px;
+      background-color: #ff9900;
+      display: none; /* only visible if there's media */
+    }
+    #show-question-btn:hover {
+      background-color: #ff6600;
+    }
+
+    #question-text {
+      font-size: 1.5rem;
+      margin-bottom: 20px;
+      display: none; /* hidden by default if there's media */
+    }
+
+    #timer {
+      font-size: 1.3rem;
+      margin-bottom: 10px;
+    }
+    #time-remaining {
+      font-weight: bold;
+    }
+    #times-up {
+      display: none;
+      color: #ff3300;
+      font-size: 1.5rem;
+      margin: 5px 0;
+    }
+
+    /* Buttons inside modal */
+    button {
+      margin: 5px;
+      padding: 10px 20px;
+      cursor: pointer;
+      font-size: 1rem;
+      border: none;
+      border-radius: 6px;
+      background-color: #008080;
+      color: #fff;
+      transition: all 0.2s ease;
+    }
+    button:hover {
+      background-color: #00aaaa;
+    }
+    #reveal-answer-btn {
+      background-color: #ff9900;
+    }
+    #reveal-answer-btn:hover {
+      background-color: #ff6600;
+    }
+    #answer-text {
+      margin-top: 15px;
+      font-size: 1.4rem;
+      font-weight: bold;
+      color: #00ff66;
+      display: none; 
+    }
+
+    /* Tie-breaker modal */
+    #tie-breaker-modal {
+      display: none;
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0, 0, 0, 0.8);
+      justify-content: center;
+      align-items: center;
+      z-index: 10001;
+    }
+    #tie-breaker-content {
+      background: #333;
+      padding: 20px 30px;
+      border-radius: 10px;
+      text-align: center;
+      max-width: 600px;
+      width: 90%;
+    }
+
+    /* Winner screen (splash) */
+    #winner-screen {
+      display: none;
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0, 0, 0, 0.8);
+      justify-content: center;
+      align-items: center;
+      z-index: 10002;
+      text-align: center;
+      color: #fff;
+      font-size: 2rem;
+      cursor: pointer; /* entire screen is clickable */
+    }
+    #winner-content {
+      position: relative;
+      background: #222;
+      padding: 30px 40px;
+      border-radius: 10px;
+    }
+    #winner-text {
+      font-size: 2.5rem;
+      margin-bottom: 20px;
+      color: #ff0;
+    }
+
+    /* Confetti in the very foreground */
+    .confetti {
+      position: fixed;
+      top: -10px;
+      width: 10px;
+      height: 10px;
+      background: red;
+      z-index: 10003; /* above winner screen */
+      opacity: 0.9;
+      animation: confetti-fall 3s linear infinite;
+    }
+
+    @keyframes confetti-fall {
+      0% {
+        transform: translateY(0) rotate(0deg);
+      }
+      100% {
+        transform: translateY(100vh) rotate(360deg);
+      }
+    }
+  </style>
+</head>
+<body>
+  <div id="title"></div>
+  <!-- Start Screen Overlay -->
+  <div id="start-screen">
+    <!-- Team name inputs -->
+	<div class="team-input">
+	  <label for="teamA-input">Team A Name:</label><br>
+	  <input type="text" id="teamA-input" placeholder="Team A">
+	</div>
+	<div class="team-input">
+	  <label for="teamB-input">Team B Name:</label><br>
+	  <input type="text" id="teamB-input" placeholder="Team B">
+	</div>
+    <button id="start-game-btn">Start Game</button>
+  </div>
+
+  <!-- Top bar -->
+  <div id="top-bar">
+    <div id="turn-indicator">It's Team A's turn!</div>
+    <div id="scoreboard">
+      <div><span id="team-a-name">Team A</span>: <span id="team-a-score">0</span></div>
+      <div><span id="team-b-name">Team B</span>: <span id="team-b-score">0</span></div>
+    </div>
+  </div>
+
+  <!-- Board container -->
+  <div id="board-container">
+    <div id="jeopardy-board"></div>
+  </div>
+
+  <!-- Question modal -->
+  <div id="question-modal" tabindex="0">
+    <div id="question-content">
+      <div id="media-container"></div>
+      
+      <button id="show-question-btn">Show Question</button>
+      <div id="question-text"></div>
+
+      <div id="timer">
+        Time remaining: <span id="time-remaining">60</span> s
+      </div>
+      <div id="times-up">Time's Up!</div>
+
+      <button id="reveal-answer-btn">Answer</button>
+      <div id="answer-text"></div>
+      
+      <button id="correct-btn">Correct</button>
+      <button id="stolen-btn">Stolen</button>
+      <button id="wrong-btn">Wrong</button>
+    </div>
+  </div>
+
+  <!-- Tie-breaker modal -->
+  <div id="tie-breaker-modal">
+    <div id="tie-breaker-content">
+      <h2>Tie-Breaker!</h2>
+      <p id="tie-breaker-question"></p>
+
+      <!-- Guess the number style: two numeric inputs -->
+      <div style="margin: 10px;">
+        <label id="tie-team-a-label" for="tie-team-a-guess">Team A's Guess:</label><br>
+        <input type="number" id="tie-team-a-guess" />
+      </div>
+      <div style="margin: 10px;">
+        <label id="tie-team-b-label" for="tie-team-b-guess">Team B's Guess:</label><br>
+        <input type="number" id="tie-team-b-guess" />
+      </div>
+	  <button id="tie-show-btn">Show Answer</button>
+	  <div id="tie-answer-text"></div>
+      <button id="tie-submit-btn">Submit Guesses</button>
+    </div>
+  </div>
+
+  <!-- Winner splash (click anywhere to return to start screen) -->
+  <div id="winner-screen">
+    <div id="winner-content">
+      <div id="winner-text"></div>
+    </div>
+  </div>
+
+  <!-- Questions data -->
+  <script src="questions.js"></script>
+  <!-- Main game logic -->
+  <script src="script.js"></script>
+</body>
+</html>
