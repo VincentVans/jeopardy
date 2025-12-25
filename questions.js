@@ -1,78 +1,76 @@
 /* =====================
-   Christmas & Winter Trivia Data
+   General Knowledge Trivia Data
    Categories: 6
    Difficulty: 100 (Kids) -> 500 (Hard Trivia)
 ===================== */
 
 const categories = [
   {
-    name: "Jolly Tunes",
+    name: "Animal Kingdom",
     questions: [
-      { question: "In 'Jingle Bells', what kind of sleigh is it?", answer: "One-horse open sleigh", value: 100, used: false },
-      { question: "Which famous reindeer has a very shiny nose?", answer: "Rudolph", value: 200, used: false },
-      { question: "Who originally crooned the best-selling single 'White Christmas'?", answer: "Bing Crosby", value: 300, used: false },
-      { question: "On the 5th day of Christmas, what does my true love give to me?", answer: "Five Golden Rings", value: 400, used: false },
-      { question: "In the song 'The Christmas Song' (Chestnuts roasting...), what are 'folks dressed up like'?", answer: "Eskimos", value: 500, used: false },
+      { question: "Which big cat is known as the 'King of the Jungle'?", answer: "Lion", value: 100, used: false },
+      { question: "What is the tallest land animal in the world?", answer: "Giraffe", value: 200, used: false },
+      { question: "How many legs does a fly have?", answer: "6", value: 300, used: false },
+      { question: "What is the only mammal that can fly?", answer: "Bat", value: 400, used: false },
+      { question: "What is the specific name for a group of crows?", answer: "A Murder", value: 500, used: false },
     ]
   },
   {
-    name: "Silver Screen",
+    name: "World Geography",
     questions: [
-      { question: "What is the name of the magical snowman in the movie 'Frozen'?", answer: "Olaf", value: 100, used: false },
-      { question: "In 'Home Alone', where is the family going for vacation when they leave Kevin behind?", answer: "Paris", value: 200, used: false },
-      { question: "What acts as the 'battery' for the sleigh in the movie 'Elf'?", answer: "Christmas Spirit", value: 300, used: false },
-      { question: "In 'A Christmas Story', what specific gift does Ralphie want more than anything?", answer: "Red Ryder BB Gun", value: 400, used: false },
-      { question: "In 'It's a Wonderful Life', what is the name of the angel who helps George Bailey?", answer: "Clarence (Odbody)", value: 500, used: false }
+      { question: "Which country is directly north of the USA?", answer: "Canada", value: 100, used: false },
+      { question: "In which city would you find the Eiffel Tower?", answer: "Paris", value: 200, used: false },
+      { question: "Which country has the largest population in the world?", answer: "India (as of 2025 they've surpassed China)", value: 300, used: false },
+      { question: "Which continent is home to the Gobi Desert?", answer: "Asia", value: 400, used: false },
+      { question: "What is the capital city of Australia?", answer: "Canberra", value: 500, used: false }
     ]
   },
   {
-    name: "Santa's Workshop",
+    name: "History Buff",
     questions: [
-      { question: "What are the pointy-eared people called who help Santa make toys?", answer: "Elves", value: 100, used: false },
-      { question: "Where does Santa live?", answer: "The North Pole", value: 200, used: false },
-      { question: "Which soft drink company is famous for shaping the modern image of Santa Claus in the 1930s?", answer: "Coca-Cola", value: 300, used: false },
-      { question: "According to Alpine folklore, who is the horned figure that punishes naughty children?", answer: "Krampus", value: 400, used: false },
-      { question: "What does the name of the reindeer 'Donner' translate to in German?", answer: "Thunder", value: 500, used: false }
+      { question: "Who was the very first President of the United States?", answer: "George Washington", value: 100, used: false },
+      { question: "Which ancient civilization built the three great Pyramids of Giza?", answer: "The Egyptians", value: 200, used: false },
+      { question: "In what decade did the Titanic sink?", answer: "1910-1920 (1912)", value: 300, used: false },
+      { question: "Who was the first human in space?", answer: "Yuri Gagarin", value: 400, used: false },
+      { question: "Which king famously had 6 wives, some of which he had executed for not giving him a son?", answer: "Henry the 8th", value: 500, used: false }
     ]
   },
   {
-    name: "Winter Wonderland",
+    name: "Science Lab",
     questions: [
-      { question: "When water gets very cold and freezes solid, what does it turn into?", answer: "Ice", value: 100, used: false },
-      { question: "What do many bears do during the winter to save energy?", answer: "Hibernate (Sleep)", value: 200, used: false },
-      { question: "How many points/sides does a standard snowflake have?", answer: "6", value: 300, used: false },
-      { question: "Which date in December usually marks the Winter Solstice in the Northern Hemisphere?", answer: "December 21st (accept 20-23)", value: 400, used: false },
-      { question: "At what specific numerical temperature are Celsius and Fahrenheit exactly the same (it is very cold)?", answer: "-40", value: 500, used: false }
+      { question: "What planet do we live on?", answer: "Earth", value: 100, used: false },
+      { question: "H2O is the chemical formula for what liquid?", answer: "Water", value: 200, used: false },
+      { question: "What gas do plants breathe in (and humans breathe out)?", answer: "Carbon Dioxide (CO2)", value: 300, used: false },
+      { question: "What is the hardest natural substance found on Earth?", answer: "Diamond", value: 400, used: false },
+      { question: "In the Periodic Table, 'Au' is the symbol for what?", answer: "Gold", value: 500, used: false }
     ]
   },
   {
-    name: "Tasty Treats",
+    name: "Entertainment",
     questions: [
-      { question: "What two items do kids usually leave out for Santa on Christmas Eve?", answer: "Cookies and Milk", value: 100, used: false },
-      { question: "What flavor is a traditional red and white candy cane?", answer: "Peppermint", value: 200, used: false },
-      { question: "What house made of food do you find in the story of Hansel and Gretel?", answer: "Gingerbread House", value: 300, used: false },
-      { question: "What popular Christmas beverage is made of milk, cream, sugar, whipped egg whites, and egg yolks?", answer: "Eggnog", value: 400, used: false },
-      { question: "Known as 'Bûche de Noël' in France, what object is this cake shaped to look like?", answer: "A Yule Log", value: 500, used: false }
+      { question: "What color are the Minions in the 'Despicable Me' movies?", answer: "Yellow", value: 100, used: false },
+      { question: "Who lives in a pineapple under the sea?", answer: "SpongeBob SquarePants", value: 200, used: false },
+      { question: "Which superhero is the secret identity of Peter Parker?", answer: "Spider-Man", value: 300, used: false },
+      { question: "Who wrote the 'Lord of the Rings' and 'Hobbit' book series?", answer: "J.R.R. Tolkien", value: 400, used: false },
+      { question: "Which actress holds the record for the most Academy Awards (Oscars) for acting (4 wins)?", answer: "Katharine Hepburn", value: 500, used: false }
     ]
   },
   {
-    name: "Traditions & Past",
+    name: "Food & Drink",
     questions: [
-      { question: "Whose birthday is celebrated on Christmas?", answer: "Jesus", value: 100, used: false },
-      { question: "What do people hang by the fireplace to be filled with small gifts?", answer: "Stockings", value: 200, used: false },
-      { question: "What three gifts did the Wise Men bring to the baby Jesus?", answer: "Gold, Frankincense, and Myrrh", value: 300, used: false },
-      { question: "Which ballet, often performed at Christmas, features the Sugar Plum Fairy?", answer: "The Nutcracker", value: 400, used: false },
-      { question: "The carol 'Good King Wenceslas' takes place on the 'Feast of Stephen'. What calendar date is that?", answer: "December 26th", value: 500, used: false }
+      { question: "Which curved fruit is yellow when it is ripe?", answer: "Banana", value: 100, used: false },
+      { question: "Which country is the origin of the dish Ratatouille?", answer: "French", value: 200, used: false },
+      { question: "What is the main ingredient in pesto?", answer: "Basil", value: 300, used: false },
+      { question: "What is the only food that arguably never spoils and can be eaten after thousands of years?", answer: "Honey", value: 400, used: false },
+      { question: "Derived from a flower crocus, what is the most expensive spice in the world by weight?", answer: "Saffron", value: 500, used: false }
     ]
   }
 ];
 
 // "guess the number" style tie-breaker
-// Fact: The world's tallest snowman (snowwoman) was built in Maine in 2008.
-// It was 122 feet tall (approx 37.21 meters).
 const tieBreaker = {
-  question: "How tall (in meters) was 'Olympia', the world's tallest snowman ever built?",
-  answer: 37.21
+  question: "How deep is the Mariana Trench (the deepest part of the ocean) in meters?",
+  answer: 10935
 };
 
 if (typeof module !== 'undefined' && module.exports) {
